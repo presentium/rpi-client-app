@@ -1,0 +1,56 @@
+name: Create Deb Package
+
+on:
+  pull_request:
+    branches:
+      - main
+
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_NAME: presentium-rfid-reader
+      PACKAGE_ARCH: all
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get Version
+      run: |
+        if [[ ${{ github.event_name }} == 'release' ]]; then
+          echo "VERSION=${{ github.ref }}" >> "$GITHUB_ENV"
+        else
+          echo "VERSION=0.0.0-${{ github.sha }}" >> "$GITHUB_ENV"
+        fi
+
+    - name: Set Full Name
+      run: |
+        echo "FULL_NAME=${{ env.PACKAGE_NAME }}_${{ env.VERSION }}-1_${{ env.PACKAGE_ARCH }}" >> $GITHUB_ENV
+
+    - name: Run package script
+      run: |
+        chmod +x package.sh
+        ./package.sh $PACKAGE_NAME $VERSION $PACKAGE_ARCH
+
+    - name: Upload Deb Package
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.FULL_NAME }}.deb
+        path: .package-build/${{ env.FULL_NAME }}.deb
+        if-no-files-found: error
+
+    - name: Upload Deb Info
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.FULL_NAME }}.deb.info
+        path: .package-build/${{ env.FULL_NAME }}.deb.info
+        if-no-files-found: error
+
+    - name: Upload Deb Content
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.FULL_NAME }}.deb.content
+        path: .package-build/${{ env.FULL_NAME }}.deb.content
+        if-no-files-found: error
