@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      PACKAGE_NAME: presentium-rfid-reader
+      PACKAGE_NAME: presentium-client
       PACKAGE_ARCH: all
     outputs:
       FULL_NAME: ${{ steps.set_full_name.outputs.FULL_NAME }}

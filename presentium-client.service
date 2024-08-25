@@ -1,5 +1,5 @@
 [Unit]
-Description=Presentium RFID reader service
+Description=Presentium Client
 After=network.target
 StartLimitBurst=5
 StartLimitIntervalSec=10
@@ -9,7 +9,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=presentium
-ExecStart=/usr/bin/env python3 /etc/presentium/rfid-reader-service/main.py
+ExecStart=/usr/bin/env python3 /etc/presentium/client/main.py
 
 [Install]
 WantedBy=multi-user.target
