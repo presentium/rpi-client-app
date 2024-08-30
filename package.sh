@@ -16,13 +16,15 @@ mkdir -p $DIR_NAME/DEBIAN
 echo "Package: $PACKAGE_NAME
 Version: $VERSION
 Maintainer: <info@presentium.ch>
-Depends: python3, python3-pip
+Depends: python3, python3-pip, python3-venv
 Architecture: $PACKAGE_ARCH
 Homepage: https://presentium.ch
 Description: Presentium client app." \
 > $DIR_NAME/DEBIAN/control
 
 echo "#!/bin/bash
+python3 -m venv presentium
+. ./presentium/bin/activate
 python3 -m pip install -r requirements.txt" \
 > $DIR_NAME/DEBIAN/postinst
 chmod 555 $DIR_NAME/DEBIAN/postinst
