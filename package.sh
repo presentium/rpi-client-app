@@ -23,6 +23,7 @@ Description: Presentium client app." \
 > $DIR_NAME/DEBIAN/control
 
 echo "#!/bin/bash
+cd /etc/presentium/presentium-client
 python3 -m venv presentium
 . ./presentium/bin/activate
 python3 -m pip install -r requirements.txt" \
