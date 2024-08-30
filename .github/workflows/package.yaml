@@ -88,4 +88,3 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: presentium/deb
           event-type: rpi-client-release
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
