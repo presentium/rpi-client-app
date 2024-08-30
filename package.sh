@@ -16,7 +16,7 @@ mkdir -p $DIR_NAME/DEBIAN
 echo "Package: $PACKAGE_NAME
 Version: $VERSION
 Maintainer: <info@presentium.ch>
-Depends: python3
+Depends: python3, python3-pip
 Architecture: $PACKAGE_ARCH
 Homepage: https://presentium.ch
 Description: Presentium client app." \
