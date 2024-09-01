@@ -1,1 +1,9 @@
 .package-build/
+__pycache__/
+config.ini
+certs/
+presentium_pb2*
+presentium.log
+registration/*.pem
+presentium-venv/
+.DS_Store

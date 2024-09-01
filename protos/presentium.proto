@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package presentium.reader.v1;
+
+option java_multiple_files = true;
+option java_package = "ch.presentium.backend.rpc";
+option java_outer_classname = "PresentiumProto";
+
+// -----------------------------------------------------------------------------
+// Service definition
+// -----------------------------------------------------------------------------
+
+service DeviceService {
+  rpc EnterEventBus(EnterRequest) returns (stream BusEvent);
+
+  rpc StudentEnrolled(EnrolledStudent) returns (GenericResponse);
+  rpc StudentPresence(PresenceStudent) returns (GenericResponse);
+}
+
+// -----------------------------------------------------------------------------
+// Request messages
+// -----------------------------------------------------------------------------
+
+message EnterRequest {
+}
+
+message EnrolledStudent {
+  string student_id = 1;
+  string card_id = 2;
+}
+
+message PresenceStudent {
+  string session_id = 1;
+  string card_id = 2;
+}
+
+// -----------------------------------------------------------------------------
+// Request messages
+// -----------------------------------------------------------------------------
+
+message GenericResponse {
+  string status = 1;
+  string message = 2;
+}
+
+// -----------------------------------------------------------------------------
+// Event bus messages
+// -----------------------------------------------------------------------------
+
+message BusEvent {
+  enum MessageType {
+    KEEP_ALIVE = 0;        // Default event, can be ignored
+    ENROLL_STUDENT = 1;    // Start enrollment process for one student
+    PRESENCE_CHECK = 2;    // Start presence checking for a class session
+  }
+
+  MessageType type = 1;
+  oneof event_data {
+    KeepAliveEvent keep_alive = 2;
+    EnrollStudentEvent enroll_student = 3;
+    PresenceCheckEvent presence_check = 4;
+  }
+}
+
+message KeepAliveEvent {
+  int32 ping = 1;
+}
+
+message EnrollStudentEvent {
+  string student_id = 1;
+}
+
+message PresenceCheckEvent {
+  string session_id = 1;
+}
