@@ -9,7 +9,8 @@ Type=simple
 Restart=always
 RestartSec=1
 User=presentium
-ExecStart=/usr/bin/env python3 /etc/presentium/client/main.py
+WorkingDirectory=/etc/presentium/presentium-client
+ExecStart=/etc/presentium/presentium-client/presentium-venv/bin/python3 /etc/presentium/presentium-client/main.py
 
 [Install]
 WantedBy=multi-user.target
