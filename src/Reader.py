@@ -1,14 +1,22 @@
-from mfrc522 import SimpleMFRC522
+import pirc522
 
 class Reader:
-    def __init__(self):
-        self.reader = SimpleMFRC522() 
+    def read_id(self):
+        self.running = True
+        try:
+            reader = pirc522.RFID()
+            while self.running:
+                uid = reader.read_id(True)
+                if uid is not None:
+                    return str(uid)
+                
+            return None
 
-    def read(self) -> tuple:
-        return self.reader.read()
+        except KeyboardInterrupt:
+            return None
 
-    def read_id(self) -> str:
-        return str(self.read()[0])
+        finally:
+            reader.cleanup()
 
-    def read_text(self) -> str:
-        return str(self.read()[1])
+    def stop(self):
+        self.running = False
