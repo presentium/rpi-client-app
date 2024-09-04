@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # Check global status, are we registered?
     if not config['global'].getboolean('Registered'):
         # Wait for the registration cert path to appear
-        screen.clear_and_write('Waiting for registration...')
+        screen.clear_and_write_lines(['Waiting for', 'registration...'])
         while not Path(f"{config['registration']['CertsPath']}/{config['registration']['CertsCert']}").exists():
             time.sleep(1)
         
@@ -132,7 +132,7 @@ if __name__ == '__main__':
     stub = grpc.connect()
 
     # Display the welcome message
-    screen.clear_and_write_lines(['Welcome to', 'Presentium!'])
+    screen.clear_and_write_lines(['Connected to', 'Presentium!'])
 
     presence_check = 0
     presence_thread = None
