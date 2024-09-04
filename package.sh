@@ -33,7 +33,8 @@ cd /etc/presentium/presentium-client
 python3 -m venv presentium-venv
 . ./presentium-venv/bin/activate
 pip3 install -r requirements.txt
-python3 codegen.py" \
+python3 codegen.py
+chown -R presentium:presentium /etc/presentium/presentium-client" \
 > $DIR_NAME/DEBIAN/postinst
 chmod 555 $DIR_NAME/DEBIAN/postinst
 
