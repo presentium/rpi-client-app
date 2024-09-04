@@ -5,7 +5,7 @@ from grpc_tools import protoc
 protoc.main((
     '',
     '-I./protos',
-    '--python_out=src',
-    '--grpc_python_out=src',
+    '--python_out=./',
+    '--grpc_python_out=./',
     './protos/presentium.proto',
 ))
