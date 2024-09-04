@@ -5,7 +5,7 @@ registered = False
 file = presentium.log
 
 [grpc]
-host = rpc.staging-api.presentium.ch
+host = rpc.api.presentium.ch
 port = 443
 
 [vault]
