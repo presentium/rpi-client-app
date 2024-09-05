@@ -66,6 +66,9 @@ if __name__ == '__main__':
         screen.clear_and_write_lines(['Waiting for', 'registration...'])
         while not Path(f"{config['registration']['tokenpath']}/{config['registration']['tokenfile']}").exists():
             time.sleep(1)
+            
+        # Update hostname is case host got renamed in the meantime
+        hostname = platform.node()
         
         screen.clear_and_write('Registering...')
 
