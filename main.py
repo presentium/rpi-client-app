@@ -6,6 +6,7 @@ import sys
 import grpc
 import time
 import threading
+import json
 
 import presentium_pb2 as serializer
 import presentium_pb2_grpc as grpc_lib
@@ -63,7 +64,7 @@ if __name__ == '__main__':
     if not config['global'].getboolean('Registered'):
         # Wait for the registration cert path to appear
         screen.clear_and_write_lines(['Waiting for', 'registration...'])
-        while not Path(f"{config['registration']['CertsPath']}/{config['registration']['CertsCert']}").exists():
+        while not Path(f"{config['registration']['tokenpath']}/{config['registration']['tokenfile']}").exists():
             time.sleep(1)
         
         screen.clear_and_write('Registering...')
@@ -71,11 +72,19 @@ if __name__ == '__main__':
         # If we're not registered, we need to register
         logger.info('Client not registered, registering...')
 
+        # Read the token json file
+        role_id = None
+        secret_id = None
+        with open(f"{config['registration']['tokenpath']}/{config['registration']['tokenfile']}", 'r') as f:
+            token = json.load(f)
+            role_id = token['role_id']
+            secret_id = token['secret_id']
+
         # Register client
         vault = Vault(logger=logger, vault_addr=config['vault']['ServerUrl'])
         result = vault.authenticate(
-            client_cert_path=f"{config['registration']['CertsPath']}/{config['registration']['CertsCert']}",
-            client_key_path=f"{config['registration']['CertsPath']}/{config['registration']['CertsKey']}"
+            role_id=role_id,
+            secret_id=secret_id
         )
 
         if not result:

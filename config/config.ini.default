@@ -14,8 +14,5 @@ certspath = certs
 serversissuerid = 80394507-e9df-2ce9-0b36-1fabeddb4fcf
 
 [registration]
-certspath = /mnt/registration-certs
-certscert = cert.pem
-certskey = key.pem
-rolename = devices-presentium.ch
-mountpoint = pki-int-ca
+tokenpath = /mnt/registration-token
+tokenfile = token.json

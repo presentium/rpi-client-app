@@ -4,6 +4,6 @@ config.ini
 certs/
 presentium_pb2*
 presentium.log
-registration/*.pem
+registration/*
 presentium-venv/
 .DS_Store

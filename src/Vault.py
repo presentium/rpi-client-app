@@ -5,10 +5,14 @@ class Vault:
         self.logger = logger
         self.client = hvac.Client(url=vault_addr)
 
-    def authenticate(self, client_cert_path: str, client_key_path: str) -> bool:
+    def authenticate(self, role_id: str, secret_id: str) -> bool:
         try:
-            self.client = hvac.Client(url=self.client.url, cert=(client_cert_path, client_key_path))
-            self.client.auth.cert.login(name='registration-cert', mount_point='registration_cert')
+            self.client = hvac.Client(url=self.client.url)
+            self.client.auth.approle.login(
+                path='registration',
+                role_id=role_id,
+                secret_id=secret_id
+            )
         except Exception as e:
             self.logger.error(f'Error authenticating with Vault: {e}')
         
