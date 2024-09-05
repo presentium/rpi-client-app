@@ -16,3 +16,5 @@ serversissuerid = 80394507-e9df-2ce9-0b36-1fabeddb4fcf
 [registration]
 tokenpath = /mnt/registration-token
 tokenfile = token.json
+rolename = devices-presentium.ch
+mountpoint = pki-int-ca
